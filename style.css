@@ -1,0 +1,62 @@
+body {
+    margin: 0;
+    text-align: center;
+}
+
+header, footer {
+    position: relative;
+    height: 10%;
+}
+
+.container {
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.calc-body-container {
+    height: 80%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.calc-display {
+    height: 120px;
+    background-color: #c4d3ff;
+    border: 1px solid grey;
+    border-radius: 20px;
+}
+
+.button {
+    height: 100%;
+    padding: 0;
+}
+
+.btn {
+    height: 100%;
+    width: 80%;
+    position: relative;
+}
+
+.operator-button {
+    background-color: #f2f2f2;
+}
+
+.clear-button, .clearall-button {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.button-row {
+    height: 10%;
+    margin: 2% 0;
+}
+
+h1 {
+    margin: 0;
+}
+
+p {
+    text-align: center;
+    clear: both;
+}
