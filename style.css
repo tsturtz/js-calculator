@@ -3,9 +3,18 @@ body {
     text-align: center;
 }
 
-header, footer {
+.header, .footer {
     position: relative;
     height: 10%;
+    display: flex;
+    align-items: center;
+}
+
+.middle {
+    position: relative;
+    height: 80%;
+    display: flex;
+    align-items: center;
 }
 
 .container {
@@ -21,10 +30,11 @@ header, footer {
 }
 
 .calc-display {
-    height: 120px;
+    height: 100px;
     background-color: #c4d3ff;
     border: 1px solid grey;
-    border-radius: 20px;
+    border-radius: 15px;
+    font-size: 5vh;
 }
 
 .button {
@@ -42,7 +52,7 @@ header, footer {
     background-color: #f2f2f2;
 }
 
-.btn_c, .btn_ce {
+.btn_c, .btn_ac {
     background-color: #ff4d4d;
     color: white;
 }
