@@ -52,7 +52,7 @@ body {
     background-color: #f2f2f2;
 }
 
-.btn_c, .btn_ac {
+.clear, .clear_entry {
     background-color: #ff4d4d;
     color: white;
 }
