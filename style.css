@@ -57,6 +57,11 @@ body {
     color: white;
 }
 
+.clear:hover, .clear_entry:hover {
+    background-color: #de4141;
+    color: white;
+}
+
 .button-row {
     height: 10%;
     margin: 2% 0;

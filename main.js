@@ -1,53 +1,110 @@
-var input_array = [''];
-var input_index = 0;
-
 $(document).ready(function(){
-    $('.operand').click(function(){
-        input_array[input_index] += $(this).text();
-        console.log('input array: ', input_array);
-        $('.calc-display').append($(this).text());
-    });
-    $('.operator').click(function(){
-        input_index++;
-        input_array[input_index] = $(this).text();
-        console.log('input array: ', input_array);
-        input_index++;
-        input_array[input_index] = '';
-        $('.calc-display').text('');
-    });
-    $('.equals').click(function(){
-        console.log(input_array);
-        $('.calc-display').text('');
-        $('.calc-display').append(do_math(input_array[0],input_array[2]));
-    });
-    $('.clear').click(function(){
-        $('.calc-display').text('');
-        input_array = [''];
-        input_index = 0;
-        console.log(input_array);
-    });
-    $('.clear_entry').click(function(){
 
-    });
+    // GLOBAL VARIABLES
+
+    var input = ['']; // Create empty array that will store input
+    var input_index = 0; // Set input index position to 0
+    var display;
+    var numbers = ['0','1','2','3','4','5','6','7','8','9']; // Numbers
+    var operators = ['+','-','/','x']; // Operators
+    var decimal = ['.']; // Decimal point
+
+    // APPLY CLICK HANDLERS
+
+    function apply_click_handlers(){
+        $('.operand').click(operand_click);
+        $('.operator').click(operator_click);
+        $('.equals').click(equals_click);
+        $('.clear').click(clear_click);
+        $('.clear_entry').click(clear_entry_click);
+    }
+
+    // BUTTON CLICK FUNCTIONS
+
+    function operand_click(){
+        console.log('operand clicked');
+        input[input_index] += $(this).text();
+        console.log('input array: ', input);
+        display = input.join('');
+        display_value();
+    }
+
+    function operator_click(){
+        input_index++;
+        input[input_index] = $(this).text();
+        console.log('input array: ', input);
+        input_index++;
+        display = input.join('');
+        display_value();
+        input[input_index] = '';
+    }
+
+    function equals_click(){
+        console.log(input);
+        $('.calc-display').text('');
+        $('.calc-display').append(do_math(input[0],input[2]));
+    }
+
+    function clear_click(){
+        input = [''];
+        input_index = 0;
+        display = input.join('');
+        display_value();
+        console.log(input);
+    }
+
+    function clear_entry_click(){
+        if(input[input.length-1].indexOf(operators)){
+            input.pop();
+            input.pop();
+        }else if(input[input.length-1].indexOf(number)){
+            input.pop();
+            input = [''];
+        }
+        console.log(input);
+        display = input.join('');
+        display_value();
+    }
+
+    // ADD TO DISPLAY
+
+    function display_value(){
+        $('.calc-display').text(display);
+    }
+
+    //
+
+    function check_if_operator(){
+        if(input[input.length-1].indexOf(operators)){
+
+        }
+    }
+
+    // CALCULATE RESULT (first number position 0 and second number at position 2)
+
+    function do_math(num1,num2){
+        var result;
+        num1 = parseFloat(num1);
+        num2 = parseFloat(num2);
+        operator = input[1];
+        if(operator == '+'){
+            result = num1 + num2;
+        }else if(operator == '-'){
+            result = num1 - num2;
+        }else if(operator == 'x'){
+            result = num1 * num2;
+        }else if(operator == '/'){
+            result = num1 / num2;
+        }
+        console.log(result);
+        return result;
+    }
+
 });
 
-function do_math(num1,num2){
-    var result;
-    num1 = parseFloat(num1);
-    num2 = parseFloat(num2);
-    operator = input_array[1];
-    if(operator == '+'){
-        result = num1 + num2;
-    }else if(operator == '-'){
-        result = num1 - num2;
-    }else if(operator == '*' || operator == 'x' || operator == 'X'){
-        result = num1 * num2;
-    }else if(operator == '/'){
-        result = num1 / num2;
-    }
-    console.log(result);
-    return result;
-}
+
+
+
 
 /*        var input = $(this).text();
  var obj = {};
@@ -55,22 +112,22 @@ function do_math(num1,num2){
  console.log('operator');
  obj.type = 'operator';
  obj.value = input;
- input_array[input_index] += obj;
+ input[input_index] += obj;
  input_index++;
- console.log(input_array);
+ console.log(input);
  }else if(input == '='){
  console.log('equalSign');
  obj.type = 'equalSign';
  obj.value = input;
- input_array[input_index] += obj;
+ input[input_index] += obj;
  input_index++;
- console.log(input_array);
+ console.log(input);
  }else if(input >= 0 || input <= 9 || input == '.'){
  console.log('number');
  obj.type = 'number';
  obj.value = input;
- input_array[input_index] += obj;
- console.log(input_array);
+ input[input_index] += obj;
+ console.log(input);
  }else if(input == 'C'){
  console.log('clear');
  }else if(input == 'CE'){
