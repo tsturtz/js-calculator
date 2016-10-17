@@ -102,7 +102,7 @@ function operator_click() {
 function equals_click() {
     console.log(input_array);
     // Clears display
-    $('.calc-display').text(''); // TODO MAKE IT SO IF EQUALS IS PRESSED BY ITSELF IT DISPLAYS ZERO. OTHERWISE THIS LINE IS UNNECESSARY
+    $('.calc-display').text(''); // TODO: MAKE IT SO IF EQUALS IS PRESSED BY ITSELF IT DISPLAYS ZERO. OTHERWISE THIS LINE IS UNNECESSARY
     // Calls function to do math and adds result to display
     prepare_math(input_array);
 }
@@ -142,6 +142,7 @@ function display_value() {
 // PREPARE MATH: do math on first two numbers, set result to first number, add next number
 
 function prepare_math(arr){
+    // As long as array is longer than 1, splice 3 indexes at position 0, do math the math, and unshift to insert the total into the first position of the array
     while (arr.length > 1){
         var section = arr.splice(0,3);
         var total = do_math(section);
@@ -173,33 +174,3 @@ function do_math(arr) {
     display_value();
     return result;
 }
-
-
-/*        var input = $(this).text();
- var obj = {};
- if(input == '+' || input == '-' || input == 'x' || input == '/'){
- console.log('operator');
- obj.type = 'operator';
- obj.value = input;
- input[input_index] += obj;
- input_index++;
- console.log(input);
- }else if(input == '='){
- console.log('equalSign');
- obj.type = 'equalSign';
- obj.value = input;
- input[input_index] += obj;
- input_index++;
- console.log(input);
- }else if(input >= 0 || input <= 9 || input == '.'){
- console.log('number');
- obj.type = 'number';
- obj.value = input;
- input[input_index] += obj;
- console.log(input);
- }else if(input == 'C'){
- console.log('clear');
- }else if(input == 'CE'){
- console.log('clear entry')
- }
- console.log(obj);*/
