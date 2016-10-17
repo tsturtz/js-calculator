@@ -15,14 +15,14 @@ var display; // Display current input
 
 function apply_click_handlers() {
     $('.operand').click(operand_click);
-    $('.operator').click(operator_click);
     $('.decimal').click(decimal_click);
+    $('.operator').click(operator_click);
     $('.equals').click(equals_click);
     $('.clear').click(clear_click);
     $('.clear_entry').click(clear_entry_click);
 }
 
-// BUTTON CLICK FUNCTIONS
+// OPERAND CLICK
 
 function operand_click() {
     if (input_array.length === 1) {
@@ -30,7 +30,7 @@ function operand_click() {
         input_array[input_index] += $(this).text();
         console.log('input array: ', input_array);
         display_value();
-    } else {
+    } else if (input_array[input_array.length - 1].includes('+') || input_array[input_array.length - 1].includes('-') || input_array[input_array.length - 1].includes('x') || input_array[input_array.length - 1].includes('/')){
         // Increments out of operator to next index position to receive next operand input
         input_index++;
         // Prepares next input to be a string
@@ -40,7 +40,39 @@ function operand_click() {
         console.log('input array: ', input_array);
         display_value();
     }
+    else {
+        // Adds text of current click to the current index position string
+        input_array[input_index] += $(this).text();
+        console.log('input array: ', input_array);
+        display_value();
+    }
 }
+
+// DECIMAL CLICK
+
+function decimal_click() {
+    // Checks for and prevents multiple decimal inputs
+    if (input_array[input_array.length - 1].includes('.')) {
+        console.warn('multiple decimals not allowed');
+    } else if (input_array[input_array.length - 1].includes('+') || input_array[input_array.length - 1].includes('-') || input_array[input_array.length - 1].includes('x') || input_array[input_array.length - 1].includes('/')){
+    // Increments out of operator to next index position to receive next operand input
+    input_index++;
+    // Prepares next input to be a string
+    input_array[input_index] = '';
+    // Adds text of current click to the current index position string
+    input_array[input_index] += $(this).text();
+    console.log('input array: ', input_array);
+    display_value();
+}
+    // Adds single decimal to string, same as an operand
+    else {
+        input_array[input_index] += $(this).text();
+        console.log('input array: ', input_array);
+        display_value();
+    }
+}
+
+//OPERATOR CLICK
 
 function operator_click() {
     var empty_string = input_array[input_array.length -1];
@@ -65,26 +97,17 @@ function operator_click() {
     }
 }
 
-function decimal_click() {
-    // Checks for and prevents multiple decimal inputs
-    if (input_array[input_array.length - 1].includes('.')) {
-        console.log('multiple decimals not allowed');
-    }
-    // Adds single decimal to string, same as an operand
-    else {
-        input_array[input_index] += $(this).text();
-        console.log('input array: ', input_array);
-        display_value();
-    }
-}
+// EQUALS CLICKED
 
 function equals_click() {
     console.log(input_array);
     // Clears display
-    $('.calc-display').text('');
+    $('.calc-display').text(''); // TODO MAKE IT SO IF EQUALS IS PRESSED BY ITSELF IT DISPLAYS ZERO. OTHERWISE THIS LINE IS UNNECESSARY
     // Calls function to do math and adds result to display
     prepare_math(input_array);
 }
+
+// C CLICKED
 
 function clear_click() {
     // Resets array to starting position
@@ -95,6 +118,8 @@ function clear_click() {
     $('.calc-display').text('0');
     console.log(input_array);
 }
+
+// CE CLICKED
 
 function clear_entry_click() {
     // Removes last index entry from array
