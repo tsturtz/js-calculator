@@ -25,15 +25,15 @@ function apply_click_handlers() {
 // BUTTON CLICK FUNCTIONS
 
 function operand_click() {
-    if(input_array.length === 1){
+    if (input_array.length === 1) {
         // Adds text of current click to the current index position string
         input_array[input_index] += $(this).text();
         console.log('input array: ', input_array);
         display_value();
-    }else{
+    } else {
         // Increments out of operator to next index position to receive next operand input
         input_index++;
-        // Prepares next input to be a string (?) Confused on why without this I receive the following example in the next index position: example: 'undefined3'
+        // Prepares next input to be a string
         input_array[input_index] = '';
         // Adds text of current click to the current index position string
         input_array[input_index] += $(this).text();
@@ -43,11 +43,15 @@ function operand_click() {
 }
 
 function operator_click() {
+    var empty_string = input_array[input_array.length -1];
     // Checks for and prevents multiple operator inputs
-    if(input_array[input_array.length-1].includes('+') || input_array[input_array.length-1].includes('-') || input_array[input_array.length-1].includes('x') || input_array[input_array.length-1].includes('/') ){
-        console.log('multiple operators not allowed');
+    if (input_array[input_array.length - 1].includes('+') || input_array[input_array.length - 1].includes('-') || input_array[input_array.length - 1].includes('x') || input_array[input_array.length - 1].includes('/')) {
+        console.warn('Cannot use successive operators');
     }
-    else{
+    else if (empty_string.length === 0) {
+        console.warn('Cannot start with an operator');
+    }
+    else {
         // Increments from last index position to receive new operator input
         input_index++;
         // Adds operator string to current index position
@@ -61,13 +65,13 @@ function operator_click() {
     }
 }
 
-function decimal_click(){
+function decimal_click() {
     // Checks for and prevents multiple decimal inputs
-    if(input_array[input_array.length-1].includes('.')){
+    if (input_array[input_array.length - 1].includes('.')) {
         console.log('multiple decimals not allowed');
     }
     // Adds single decimal to string, same as an operand
-    else{
+    else {
         input_array[input_index] += $(this).text();
         console.log('input array: ', input_array);
         display_value();
@@ -79,7 +83,7 @@ function equals_click() {
     // Clears display
     $('.calc-display').text('');
     // Calls function to do math and adds result to display
-    $('.calc-display').append(do_math(input_array[0], input_array[2]));
+    prepare_math(input_array);
 }
 
 function clear_click() {
@@ -110,23 +114,38 @@ function display_value() {
     $('.calc-display').text(display);
 }
 
+// PREPARE MATH: do math on first two numbers, set result to first number, add next number
+
+function prepare_math(arr){
+    while (arr.length > 1){
+        var section = arr.splice(0,3);
+        var total = do_math(section);
+        arr.unshift(total);
+    }
+    display_value();
+    return arr;
+}
+
 // CALCULATE RESULT (first number position 0 and second number at position 2)
 
-function do_math(num1, num2) {
+function do_math(arr) {
     var result;
-    num1 = parseFloat(num1);
-    num2 = parseFloat(num2);
-    var operator = input_array[1];
-    if (operator === '+') {
-        result = num1 + num2;
-    } else if (operator === '-') {
-        result = num1 - num2;
-    } else if (operator === 'x') {
-        result = num1 * num2;
-    } else if (operator === '/') {
-        result = num1 / num2;
+    if (arr.length === 3) {
+        var num1 = parseFloat(arr[0]);
+        var num2 = parseFloat(arr[2]);
+        var operator = arr[1];
+        if (operator === '+') {
+            result = num1 + num2;
+        } else if (operator === '-') {
+            result = num1 - num2;
+        } else if (operator === 'x') {
+            result = num1 * num2;
+        } else if (operator === '/') {
+            result = num1 / num2;
+        }
     }
     console.log(result);
+    display_value();
     return result;
 }
 
