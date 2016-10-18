@@ -35,6 +35,9 @@ body {
     border: 1px solid grey;
     border-radius: 15px;
     font-size: 5vh;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
     display: flex;
     align-items: center;
     justify-content: center;

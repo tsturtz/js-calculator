@@ -102,9 +102,11 @@ function operator_click() {
 function equals_click() {
     console.log(input_array);
     // Clears display
-    $('.calc-display').text(''); // TODO: MAKE IT SO IF EQUALS IS PRESSED BY ITSELF IT DISPLAYS ZERO. OTHERWISE THIS LINE IS UNNECESSARY
-    // Calls function to do math and adds result to display
-    prepare_math(input_array);
+    $('.calc-display').text('0');
+    if(input_array.length !== 1) {
+        // Calls function to do math and adds result to display
+        prepare_math(input_array);
+    }
 }
 
 // C CLICKED
@@ -174,3 +176,5 @@ function do_math(arr) {
     display_value();
     return result;
 }
+
+// TODO see scope sheet
