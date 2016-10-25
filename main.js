@@ -10,6 +10,7 @@ $(document).ready(function () {
 var input_array = ['']; // Create empty array that will store input
 var input_index = 0; // Set input index position to 0
 var display; // Display current input
+var operator_validate = ['+','-','/','x'];
 
 // CLICK HANDLERS
 
@@ -30,7 +31,7 @@ function operand_click() {
         input_array[input_index] += $(this).text();
         console.log('input array: ', input_array);
         display_value();
-    } else if (input_array[input_array.length - 1].includes('+') || input_array[input_array.length - 1].includes('-') || input_array[input_array.length - 1].includes('x') || input_array[input_array.length - 1].includes('/')){
+    } else if (operator_validate.indexOf(input_array[input_array.length-1]) !== -1){
         // Increments out of operator to next index position to receive next operand input
         input_index++;
         // Prepares next input to be a string
@@ -54,7 +55,7 @@ function decimal_click() {
     // Checks for and prevents multiple decimal inputs
     if (input_array[input_array.length - 1].includes('.')) {
         console.warn('multiple decimals not allowed');
-    } else if (input_array[input_array.length - 1].includes('+') || input_array[input_array.length - 1].includes('-') || input_array[input_array.length - 1].includes('x') || input_array[input_array.length - 1].includes('/')){
+    } else if (operator_validate.indexOf(input_array[input_array.length-1]) !== -1){
     // Increments out of operator to next index position to receive next operand input
     input_index++;
     // Prepares next input to be a string
@@ -77,8 +78,10 @@ function decimal_click() {
 function operator_click() {
     var empty_string = input_array[input_array.length -1];
     // Checks for and prevents multiple operator inputs
-    if (input_array[input_array.length - 1].includes('+') || input_array[input_array.length - 1].includes('-') || input_array[input_array.length - 1].includes('x') || input_array[input_array.length - 1].includes('/')) {
-        console.warn('Cannot use successive operators');
+    if (operator_validate.indexOf(input_array[input_array.length-1]) !== -1) {
+        input_array[input_array.length-1] = $(this).text();
+        console.log(input_array);
+        display_value();
     }
     else if (empty_string.length === 0) {
         console.warn('Cannot start with an operator');
@@ -162,7 +165,10 @@ function do_math(arr) {
         var num1 = parseFloat(arr[0]);
         var num2 = parseFloat(arr[2]);
         var operator = arr[1];
-        if (operator === '+') {
+        if (num1 === 1 && operator === '/' && num2 === 0) {
+            result = 'Error';
+        }
+        else if (operator === '+') {
             result = num1 + num2;
         } else if (operator === '-') {
             result = num1 - num2;
